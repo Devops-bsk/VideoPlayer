@@ -2,15 +2,14 @@
 
 
 ****1.Writing Terraform for Jenkins , Docker and SonarQube server**
+
 resource "aws_instance" "ec2" {
   ami = "ami-06c4be2792f419b7b"
   key_name = "Singapore"
   instance_type = "t2.large"
     vpc_security_group_ids = [aws_security_group.Jenkins-vm-sg.id]
     user_data = templatefile("./install.sh" , {})
-     
-
-    tags = {
+      tags = {
       Name = "Jenkins-sonar"
     }
     root_block_device {
@@ -39,8 +38,7 @@ resource "aws_security_group" "Jenkins-vm-sg" {
         to_port = 0
         protocol = -1
         cidr_blocks = ["0.0.0.0/0"]
-        
-    }
+     }
     tags = {
       Name = "Jenkins-vm-sg"
     }
@@ -58,6 +56,7 @@ resource "aws_security_group" "Jenkins-vm-sg" {
 
 
 **5.Create EC2 & Setup for Prometheus and Grafana**
+
 resource "aws_instance" "monitor" {
     ami = "ami-06c4be2792f419b7b"
     instance_type = "t2.medium"
@@ -86,7 +85,6 @@ resource "aws_security_group" "MySecurity" {
             ipv6_cidr_blocks = []
             prefix_list_ids = []
             security_groups = []
-
             self = false
         }
     ]
